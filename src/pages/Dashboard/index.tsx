@@ -50,16 +50,20 @@ const Dashboard: React.FC = () => {
   async function handleUpdateFood(
     food: Omit<IFoodPlate, 'id' | 'available'>,
   ): Promise<void> {
-    const response = await api.patch(`/foods/${editingFood.id}`, {
-      ...editingFood,
-      ...food,
-    });
+    // const response = await api.patch(`/foods/${editingFood.id}`, {
+    //   ...editingFood,
+    //   ...food,
+    // });
 
-    setFoods(foods.map(f => (f.id === editingFood.id ? response.data : f)));
+    setFoods(
+      foods.map(f =>
+        f.id === editingFood.id ? { ...editingFood, ...food } : f,
+      ),
+    );
   }
 
   async function handleDeleteFood(id: number): Promise<void> {
-    await api.delete(`/foods/${id}`);
+    // await api.delete(`/foods/${id}`);
 
     setFoods(foods.filter(food => food.id !== id));
   }
